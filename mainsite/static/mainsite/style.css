@@ -1,0 +1,61 @@
+li a {
+    color: yellowgreen;
+}
+.topnav {
+    background-color: #f78e00;
+    color: #704915;
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+    width: 100%;
+    position: fixed;
+    top: 0;
+
+
+}
+.topnav a {
+    color: #704915;
+    display: block;
+    padding: 14px;
+
+}
+.topnav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+} 
+.topnav li {
+    display: inline;
+    float: left;
+}
+/* Change the link color to #111 (black) on hover */
+.topnav li a:hover {
+    background-color: #ab6b04;
+}
+.active {
+    background-color: #04AA6D;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #704915;
+
+
+}
+th {
+    height: 70px;
+    text-align: center;
+    vertical-align: middle;
+}
+table, th {
+    border: 0px;
+}
+div.relative {
+    position: relative;
+    width: 400px;
+    height: 200px;
+    border: 3px solid #73AD21;
+  }
