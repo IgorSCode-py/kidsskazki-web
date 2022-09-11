@@ -1,1 +1,1 @@
-This is web site for selling electronic fairy tales by Julia Shlepanova
+"This is web site for selling electronic fairy tales by Julia Shlepanova"

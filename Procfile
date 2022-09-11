@@ -1,0 +1,1 @@
+web: gunicorn kidsskazki.wsgi --log-file -
