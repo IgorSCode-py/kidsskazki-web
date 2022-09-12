@@ -1,0 +1,16 @@
+<!-- templates/signup.html -->
+{% extends 'mainsite/layout.html' %}
+
+{% block content %}
+<h2>Sign up</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Sign up</button>
+</form>
+<div class="border-top pt-3">
+  <small class="text-muted">
+    Уже есть аккаунт? <a class="ml-2" href="{% url 'login' %}">Вход</a>
+  </small>
+</div>
+{% endblock content %}

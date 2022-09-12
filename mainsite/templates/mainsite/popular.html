@@ -18,18 +18,18 @@
                     <td>
                         <h2>{{ book.book_title }}</h2>
                         <p>{{ book.book_description }}</p>
-                        <p>{% if book.book_price != 0 %} Цена: {{ book.book_price }} руб.{% else %} Бесплатно {% endif %}</p>
-                        <p><button type="button" id="buyButton">Купить</button> <button type="button" id="downloadButton">Скачать</button></p>
-                        <p>Рейтинг: Сайт: {{book.book_rate_site}} | Apple: {{book.book_rate_apple}} | Android {{book.book_rate_android}} | <a href="">Проголосовать</a></p>
-                        <p>Отзывы:  <a href="">Сайт</a> | <a href="">iOS</a> | <a href="">Android</a> | <a href="">Оставить отзыв</a></p>
-                        <p>Бесплатный фрагмент <button type="button" id="readButton">Читать</button>  <button type="button" id="listenButton">Слушать</button></p>
-                        <p><a target="_blank" href={{ book.book_free_single_html_fragment.url }}>html</a> | <a target="_blank" href={{ book.book_free_pdf_fragment.url }} >pdf</a> </p>
-                        <audio  controls loop>
-                            <source src={{ book.book_free_audio_fragment.url }}>
-                            This browser doesn't support audio
-                        </audio>
-                        <p>Как читать и слушать после покупки</p>
-                        <p>Получить скидочные баллы</p>
+                        <p>{% if book.book_price != 0 %} Цена: {{ book.book_price }} руб.{% else %} Бесплатно {% endif %}
+                            <a href="{% url 'book_detail' book.id %}"><button type="button" id="buyButton" {% if book.book_price == 0 %} disabled {% endif %}>Купить</button></a>
+                            <a href="{% url 'book_detail' book.id %}"> <button type="button" id="readButton" {% if book.book_price != 0 %} disabled {% endif %}>Читать</button> </a>
+                            <a href="{% url 'book_detail' book.id %}"> <button type="button" id="listenButton"{% if book.book_price != 0 %} disabled {% endif %}>Слушать</button> </a>
+                        </p>
+                        <p>Рейтинг: Сайт: {{book.book_rate_site}} | Apple: {{book.book_rate_apple}} | Android {{book.book_rate_android}} | <a href="{% url 'vote_create' %}">Проголосовать</a></p>
+                        <p>Отзывы:  <a href="{% url 'book_detail' book.id %}">Сайт</a> | <a href="">iOS</a> | <a  target="_blank" href={{ book.book_android_link }}>Android</a> | <a href="{% url 'vote_create' %}">Оставить отзыв</a></p>
+                        <p>Бесплатный фрагмент
+                            <a href="{% url 'book_detail' book.id %}"> <button type="button" id="readButton">Читать</button> </a>
+                            <a href="{% url 'book_detail' book.id %}"> <button type="button" id="listenButton">Слушать</button> </a>
+                        </p>
+                        <p>{{ book.book_favourite_comment }}</p>
                     </td>
                   </tr>
                 </table>

@@ -1,0 +1,40 @@
+{% extends 'mainsite/layout.html' %}
+
+{% block content %}
+        <h1>Купленные книги</h1>
+
+            {% if bought_list %}
+            {% for bought in bought_list %}
+
+            <div>
+                <table>
+                  <tr>
+                    <td>
+                        <!--'static/media/images/_cat_500_DtgUPnC.jpg'<img src=cat_500.jpg' alt="Magic cat">--!>
+                        <img src={{ bought.book.book_image.url }} alt={{ book.book_title }}>
+                    </td>
+                    <td>
+                        <h2>{{ bought.book.book_name }}</h2>
+                        <p>{{ bought.book.book_description }}</p>
+                        <p>{% if bought.book.book_price != 0 %} Цена: {{ bought.book.book_price }} руб.{% else %} Бесплатно {% endif %}
+                            <a href="{% url 'book_detail' bought.book.id %}"> <button type="button" id="readButton" {% if book.book_price != 0 %} disabled {% endif %}>Читать</button> </a>
+                            <a href="{% url 'book_detail' bought.book.id %}"> <button type="button" id="listenButton"{% if book.book_price != 0 %} disabled {% endif %}>Слушать</button> </a>
+                        </p>
+                        <p>Рейтинг: Сайт: {{bought.book.book_rate_site}} | Apple: {{bought.book.book_rate_apple}} | Android {{bought.book.book_rate_android}} | <a href="{% url 'vote_create' %}">Проголосовать</a></p>
+                        <p>Отзывы:  <a href="{% url 'book_detail' bought.book.id %}">Сайт</a> | <a href="">iOS</a> | <a  target="_blank" href={{ book.book_android_link }}>Android</a> | <a href="{% url 'vote_create' %}">Оставить отзыв</a></p>
+                        <p>Бесплатный фрагмент
+                            <a href="{% url 'book_detail' bought.book.id %}"> <button type="button" id="readButton">Читать</button> </a>
+                            <a href="{% url 'book_detail' bought.book.id %}"> <button type="button" id="listenButton">Слушать</button> </a>
+                        </p>
+                        <p>{{ bought.book.book_favourite_comment }}</p>
+                    </td>
+                  </tr>
+                </table>
+                <hr>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No books are available.</p>
+        {% endif %}
+
+{% endblock %}

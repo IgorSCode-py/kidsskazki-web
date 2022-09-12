@@ -1,0 +1,13 @@
+<!-- templates/home.html -->
+{% extends 'mainsite/layout.html' %}
+
+{% block content %}
+  {% for vote in vote_list %}
+    <div class="vote-entry">
+      <h2><a href="">{{ vote.book }}</a></h2>
+      <p>{{ vote.voter }}</p>
+      <p>{{ vote.score }}</p>
+      <p>{{ vote.comment }}</p>
+    </div>
+  {% endfor %}
+{% endblock content %}

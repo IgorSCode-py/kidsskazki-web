@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.views import generic
+from django.urls import reverse_lazy
+from django.contrib.auth.forms import UserCreationForm
 
-
-from .models import Book
+from .models import Book, Vote, Buyer
 
 
 # Create your views here.
@@ -17,9 +18,55 @@ class IndexView(generic.ListView):
         Return the top-3 popular books.
         """
 
-        return Book.objects.all()
+        return Book.objects.filter(
+            book_genre = "Популярные"
+        )
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['context_title'] = 'Popular'
+        return context
+
+class SleepingView(generic.ListView):
+    template_name = 'mainsite/popular.html'#layout
+    context_object_name = 'popular_books_list'
+    context_title = 'Sleeping'
+
+    def get_queryset(self):
+        """
+        Return the top-3 popular books.
+        """
+        return Book.objects.filter(
+            book_genre = "Популярные"
+        )
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['context_title'] = 'Sleeping'
+        return context
+
+class DevelopingView(generic.ListView):
+    template_name = 'mainsite/popular.html'#layout
+    context_object_name = 'popular_books_list'
+    context_title = 'Developing'
 
 
+    def get_queryset(self):
+        """
+        Return the top-3 popular books.
+        """
+        return Book.objects.filter(
+            book_genre = "Популярные"
+        )
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['context_title'] = 'Developing'
+        return context
 
 def book_list(request):
     """
@@ -30,15 +77,47 @@ def book_list(request):
     #print(data)
     return JsonResponse(data)
 
+def book_detail_view(request, book_id = 1):
+    book = get_object_or_404(Book, pk=book_id)
+    vote_list = Vote.objects.filter(book = book)
+    context = {
+        'book': book,
+        'vote_list': vote_list
+        }
+    return render(request, 'mainsite/book_detail.html', context)
 
-def aboutskazki(request):
-    return render(request, "main/aboutskazki.html")
+def buyer_detail_view(request, user_id = 1):
+    buyer = request.user
+    bought_list = Buyer.objects.filter(buyer = buyer, bought = True)
+    context = {
+        'bought_list': bought_list
+        }
+    return render(request, 'mainsite/buyer_detail.html', context)
 
-def application(request):
-    return render(request, "main/application.html")
+class VoteDetailView(generic.DetailView):
+    model = Vote
+    template_name = 'mainsite/vote_detail.html'
 
-def education(request):
-    return render(request, "main/education.html")
+class VoteListView(generic.ListView):
+    model = Vote
+    template_name = 'mainsite/vote_list.html'
+    context_object_name = 'vote_list'
 
-def relax(request):
-    return render(request, "main/relax.html")
+class VoteCreate(generic.CreateView):
+    model = Vote
+    fields = '__all__'
+    success_url = reverse_lazy('vote_list')
+
+
+class VoteUpdate(generic.UpdateView):
+    model = Vote
+    fields = '__all__'
+
+class VoteDelete(generic.DeleteView):
+    model = Vote
+    success_url = reverse_lazy('vote_list')
+
+class SignUpView(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'mainsite/signup.html'

@@ -1,0 +1,16 @@
+<!-- templates/post_detail.html -->
+{% extends 'mainsite/layout.html' %}
+
+{% block content %}
+  <div class="vote-entry">
+    <h2>{{ vote.book }}</h2>
+    <p>{{ vote.score }}</p>
+    <p>{{ vote.comment }}</p>
+  </div>
+  <div class="border-top pt-3">
+    <small class="text-muted">
+      <a class="ml-2" href="{% url 'vote_update' vote.id %}">Редактировать</a>
+      <a class="ml-2" href="{% url 'vote_delete' vote.id %}">Удалить</a>
+    </small>
+  </div>
+{% endblock content %}

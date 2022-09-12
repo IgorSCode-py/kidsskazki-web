@@ -1,0 +1,38 @@
+{% extends 'mainsite/layout.html' %}
+
+{% block content %}
+    <h1>{{ book.book_title }}: Отзывы</h1>
+            <div>
+                <table>
+                  <tr>
+                    <td>
+                        <!--'static/media/images/_cat_500_DtgUPnC.jpg'<img src=cat_500.jpg' alt="Magic cat">--!>
+                        <img src={{ book.book_image.url }} alt={{ book.book_title }}>
+                    </td>
+                    <td>
+                        <h2>{{ book.book_title }}</h2>
+                        <p>{{ book.book_description }}</p>
+                        <p>{% if book.book_price != 0 %} Цена: {{ book.book_price }} руб.{% else %} Бесплатно {% endif %}</p>
+                        <iframe src="https://yoomoney.ru/quickpay/button-widget?targets=&default-sum=150&button-text=11&yoomoney-payment-type=on&button-size=m&button-color=orange&successURL=&quickpay=small&account=4100117146365495&" width="184" height="36" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+                        <p><a href="https://yoomoney.ru/to/4100117146365495"><button type="button" id="buyButton" {% if book.book_price == 0 %} disabled {% endif %}>Купить</button></a> </p>
+                        <p>Рейтинг: Сайт: {{book.book_rate_site}} | Apple: {{book.book_rate_apple}} | Android {{book.book_rate_android}} | <a href="{% url 'vote_create' %}">Проголосовать</a></p>
+                        <p>Отзывы:  <a href="{% url 'vote_list' %}">Сайт</a> | <a href="">iOS</a> | <a  target="_blank" href={{ book.book_android_link }}>Android</a> | <a href="{% url 'vote_create' %}">Оставить отзыв</a></p>
+                        <p>Бесплатный фрагмент <button type="button" id="readButton">Читать</button>  <button type="button" id="listenButton">Слушать</button></p>
+                        <p><a target="_blank" href={{ book.book_free_single_html_fragment.url }}>html</a> | <a target="_blank" href={{ book.book_free_pdf_fragment.url }} >pdf</a> </p>
+                        <audio  controls loop>
+                            <source src={{ book.book_free_audio_fragment.url }}>
+                            This browser doesn't support audio
+                        </audio>
+                    </td>
+                  </tr>
+                </table>
+                <hr>
+                {% for vote in vote_list %}
+                <div class="vote-entry">
+                    <p>{{ vote.voter }}</p>
+                    <p>{{ vote.score }}</p>
+                    <p>{{ vote.comment }}</p>
+                </div>
+                {% endfor %}
+            </div>
+{% endblock %}

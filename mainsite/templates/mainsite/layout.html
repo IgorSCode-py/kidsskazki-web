@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+    <link rel="stylesheet" href="{% static 'mainsite/style.css' %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'mainsite/images/favicon.ico' %}"/>
     <title>{% block title %}{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -16,12 +16,12 @@
 <body>
     <nav class = 'topnav'>
         <ul id = 'myMenu'>
-            <li width= 200> <a href="//">KIDSSKAZKI</a></li>
-            <li><a href="//">Популярные</a></li>
-            <li><a href="//">Медитативные</a></li>
-            <li><a href="//">Развивающие</a></li>
-            <li style="float:right"><a href="//">My books</a></li>
-            <li style="float:right"><a href="//">Baba Yaga`s club</a></li>
+            <li width= 200> <a href="/">KIDSSKAZKI</a></li>
+            <li><a href="/">Popular</a></li>
+            <li><a href="/sleeping">Sleeping</a></li>
+            <li><a href="/developing">Developing</a></li>
+            <li style="float:right"><a {% if user.is_authenticated %} href="{% url 'buyer_detail' user.id %}" {% else %} href="{% url 'login' %}"{% endif %}>My books</a></li>
+            <li style="float:right">{% if user.is_authenticated %}<a href="{% url 'logout' %}">{{ user.username }}:Log out</a>{% else %}<a href="{% url 'login' %}">Baba Yaga`s club</a>{% endif %}</li>
         </ul>
     </nav>
     <br>
