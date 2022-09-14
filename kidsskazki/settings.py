@@ -21,7 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = 'django-insecure-1h@vqyibvrvrt4w+!+-b+!y@4=0@$u64s2m8!ngubjxz8^@iv)'
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-1h@vqyibvrvrt4w+!+-b+!y@4=0@$u64s2m8!ngubjxz8^@iv)')
+LOCAL_KEY = 'django-insecure-1h@vqyibvrvrt4w+!+-b+!y@4=0@$u64s2m8!ngubjxz8^@iv)'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', LOCAL_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
@@ -138,11 +139,15 @@ DATABASES['default'].update(db_from_env)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 # The absolute path to the directory where collectstatic will collect static files for deployment.
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+if SECRET_KEY != LOCAL_KEY:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+else:
+    STATIC_ROOT = BASE_DIR
 
 # The URL to use when referring to static files (where they will be served from)
 STATIC_URL = '/static/'
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+if SECRET_KEY != LOCAL_KEY:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

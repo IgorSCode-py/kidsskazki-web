@@ -2,3 +2,5 @@
 media/
 *.bak
 __pycache__
+kidsskazki/__pycache__/
+mainsite/__pycache__/

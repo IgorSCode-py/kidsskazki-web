@@ -9,17 +9,20 @@ from .models import Book, Vote, Buyer
 
 # Create your views here.
 class IndexView(generic.ListView):
-    template_name = 'mainsite/popular.html'#layout
+    """
+    Return the top-3 popular books.
+    """
+    template_name = 'mainsite/popular.html'
     context_object_name = 'popular_books_list'
 
 
     def get_queryset(self):
         """
-        Return the top-3 popular books.
+        Return a list of the popular books.
         """
 
         return Book.objects.filter(
-            book_genre = "Популярные"
+            book_genre = "Popular"
         )
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -29,16 +32,16 @@ class IndexView(generic.ListView):
         return context
 
 class SleepingView(generic.ListView):
-    template_name = 'mainsite/popular.html'#layout
+    template_name = 'mainsite/popular.html'
     context_object_name = 'popular_books_list'
     context_title = 'Sleeping'
 
     def get_queryset(self):
         """
-        Return the top-3 popular books.
+        Return a list of the sleeping books.
         """
         return Book.objects.filter(
-            book_genre = "Популярные"
+            book_genre = "Sleeping"
         )
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -48,17 +51,17 @@ class SleepingView(generic.ListView):
         return context
 
 class DevelopingView(generic.ListView):
-    template_name = 'mainsite/popular.html'#layout
+    template_name = 'mainsite/popular.html'
     context_object_name = 'popular_books_list'
     context_title = 'Developing'
 
 
     def get_queryset(self):
         """
-        Return the top-3 popular books.
+        Return a list of the developing books.
         """
         return Book.objects.filter(
-            book_genre = "Популярные"
+            book_genre = "Developing"
         )
 
     def get_context_data(self, **kwargs):
@@ -79,7 +82,7 @@ def book_list(request):
 
 def book_detail_view(request, book_id = 1):
     book = get_object_or_404(Book, pk=book_id)
-    vote_list = Vote.objects.filter(book = book)
+    vote_list = Vote.objects.filter(book=book)
     context = {
         'book': book,
         'vote_list': vote_list
