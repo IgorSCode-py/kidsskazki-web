@@ -22,7 +22,7 @@ class IndexView(generic.ListView):
         """
 
         return Book.objects.filter(
-            book_genre = "Popular"
+            book_genre="Popular"
         )
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -34,14 +34,13 @@ class IndexView(generic.ListView):
 class SleepingView(generic.ListView):
     template_name = 'mainsite/popular.html'
     context_object_name = 'popular_books_list'
-    context_title = 'Sleeping'
 
     def get_queryset(self):
         """
         Return a list of the sleeping books.
         """
         return Book.objects.filter(
-            book_genre = "Sleeping"
+            book_genre="Sleeping"
         )
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -53,8 +52,6 @@ class SleepingView(generic.ListView):
 class DevelopingView(generic.ListView):
     template_name = 'mainsite/popular.html'
     context_object_name = 'popular_books_list'
-    context_title = 'Developing'
-
 
     def get_queryset(self):
         """

@@ -42,6 +42,18 @@ class BookIndexViewTests(TestCase):
         self.assertContains(response, "No books are available.")
         self.assertQuerysetEqual(response.context['popular_books_list'], [])
 
+    def test_popular_title(self):
+        """
+        Page title Popular (genre) is displayed on the
+        index page.
+        """
+        book = create_book(title="Test title.", genre="Popular")
+        response = self.client.get(reverse('index'))
+        self.assertQuerysetEqual(
+            response.context['context_title'],
+            'Popular',
+        )
+
     def test_popular_book(self):
         """
         Books with popular genre are displayed on the
@@ -54,6 +66,17 @@ class BookIndexViewTests(TestCase):
             [book],
         )
 
+    def test_sleeping_title(self):
+        """
+        Page title Sleeping (genre) is displayed on the
+        Sleeping page.
+        """
+        book = create_book(title="Test title.", genre="Sleeping")
+        response = self.client.get(reverse('sleeping'))
+        self.assertQuerysetEqual(
+            response.context['context_title'],
+            'Sleeping',
+        )
     def test_sleeping_book(self):
         """
         Books with sleeping genre are displayed on the
@@ -66,12 +89,23 @@ class BookIndexViewTests(TestCase):
             [book],
         )
 
+    def test_developing_title(self):
+        """
+        Page title Developing (genre) is displayed on the
+        Developing page.
+        """
+        book = create_book(title="Test title.", genre="Developing")
+        response = self.client.get(reverse('developing'))
+        self.assertQuerysetEqual(
+            response.context['context_title'],
+            'Developing',
+        )
     def test_developing_book(self):
         """
         Books with developing genre are displayed on the
         index page.
         """
-        book = create_book(title="Test title.", genre = "Developing")
+        book = create_book(title="Test title.", genre="Developing")
         response = self.client.get(reverse('developing'))
         self.assertQuerysetEqual(
             response.context['popular_books_list'],
