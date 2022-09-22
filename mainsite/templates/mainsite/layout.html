@@ -20,8 +20,8 @@
             <li><a href="/">Popular</a></li>
             <li><a href="/sleeping">Sleeping</a></li>
             <li><a href="/developing">Developing</a></li>
-            <li style="float:right"><a {% if user.is_authenticated %} href="{% url 'buyer_detail' user.id %}" {% else %} href="{% url 'login' %}"{% endif %}>My books</a></li>
-            <li style="float:right">{% if user.is_authenticated %}<a href="{% url 'logout' %}">{{ user.username }}:Log out</a>{% else %}<a href="{% url 'login' %}">Baba Yaga`s club</a>{% endif %}</li>
+            <li style="float:right"><a {% if user.is_authenticated %} href="{% url 'buyer_detail' %}" {% else %} href="{% url 'login' %}"{% endif %}>My books</a></li>
+            <li style="float:right">{% if user.is_authenticated %}<a href="{% url 'logout' %}">{{ user.get_username }}:Log out</a>{% else %}<a href="{% url 'login' %}">Baba Yaga`s club</a>{% endif %}</li>
         </ul>
     </nav>
     <br>

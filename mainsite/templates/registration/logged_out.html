@@ -1,0 +1,10 @@
+<!-- templates/registration/logout.html -->
+{% extends 'mainsite/layout.html' %} &nbsp;{% block content %}
+<h2>Logged out</h2>
+<p>Thanks for spending some quality time with our web site today.</p>
+<div class="border-top pt-3">
+  <small class="text-muted">
+    <a class="ml-2" href="{% url 'login' %}">Log in again</a>
+  </small>
+</div>
+{% endblock content %}

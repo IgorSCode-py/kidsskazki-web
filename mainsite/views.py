@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Book, Vote, Buyer
 
@@ -86,13 +88,15 @@ def book_detail_view(request, book_id = 1):
         }
     return render(request, 'mainsite/book_detail.html', context)
 
-def buyer_detail_view(request, user_id = 1):
+@login_required
+def buyer_detail_view(request):
     buyer = request.user
-    bought_list = Buyer.objects.filter(buyer = buyer, bought = True)
+    bought_list = Buyer.objects.filter(buyer=buyer, bought=True)
     context = {
-        'bought_list': bought_list
-        }
+            'bought_list': bought_list
+            }
     return render(request, 'mainsite/buyer_detail.html', context)
+
 
 class VoteDetailView(generic.DetailView):
     model = Vote
@@ -103,17 +107,17 @@ class VoteListView(generic.ListView):
     template_name = 'mainsite/vote_list.html'
     context_object_name = 'vote_list'
 
-class VoteCreate(generic.CreateView):
+class VoteCreate(LoginRequiredMixin, generic.CreateView):
     model = Vote
     fields = '__all__'
     success_url = reverse_lazy('vote_list')
 
 
-class VoteUpdate(generic.UpdateView):
+class VoteUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Vote
     fields = '__all__'
 
-class VoteDelete(generic.DeleteView):
+class VoteDelete(LoginRequiredMixin, generic.DeleteView):
     model = Vote
     success_url = reverse_lazy('vote_list')
 

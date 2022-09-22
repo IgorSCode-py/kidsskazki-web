@@ -26,10 +26,10 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', LOCAL_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', False))
 
 ALLOWED_HOSTS = ['igorshy.pythonanywhere.com',
-                 '127.0.0.1:8000']
+                 '127.0.0.1']
 
 
 # Application definition
@@ -60,7 +60,7 @@ ROOT_URLCONF = 'kidsskazki.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -152,3 +152,6 @@ STATIC_URL = '/static/'
 # https://warehouse.python.org/project/whitenoise/
 if SECRET_KEY != LOCAL_KEY:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+#for debuging emails via terminal
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -3,7 +3,8 @@ from django.urls import reverse
 import os
 
 from kidsskazki import settings
-from .models import Book
+from .models import Book, Buyer, Vote
+from django.contrib.auth.models import User
 # Create your tests here.
 
 #class BookModelTests(TestCase):
@@ -168,5 +169,89 @@ class BookDetailViewTests(TestCase):
         """
         book = create_book(title='Test book 1', genre='Popular')
         url = reverse('book_detail', args=(book.id+1,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+
+def create_buyer(book,user):
+    """
+    Create a buyer with a given book
+    """
+
+    return Buyer.objects.create(book=book,
+                                buyer=user,
+                                bought=True
+                                )
+class BuyerDetailViewTests(TestCase):
+    def test_buyer_detail(self):
+        """
+        The list of the books
+        bought (or available) by the user.
+        """
+
+        book = create_book(title='Test book 1', genre='Popular')
+        user = User.objects.create_user('test_username', 'test_email@crazymail.com', 'mypassword')
+        buyer = create_buyer(book=book,
+                             user=user)
+        url = reverse('buyer_detail')
+
+        response = self.client.get(url)
+        #self.assertQuerysetEqual(
+        #    qs=response.context['bought_list'],
+        #    values=[buyer]
+        #)
+
+        self.assertEqual(response.status_code, 302)
+        #self.assertContains(response, "No books are available.")
+        #self.assertQuerysetEqual(response.context['popular_books_list'], [])
+
+def create_vote(book, user, comment='Test comment 1'):
+    """
+    Create a buyer with a given book
+    """
+
+    return Vote.objects.create(book=book,
+                                voter=user,
+                                score=5,
+                                comment=comment
+                                )
+
+class VoteListViewTests(TestCase):
+    def test_vote_list(self):
+        """
+        Votes on the vote list page.
+        """
+        book = create_book(title='Test book 1', genre='Popular')
+        user = User.objects.create_user('test_username', 'test_email@crazymail.com', 'mypassword')
+        vote = create_vote(book=book,
+                             user=user)
+
+        response = self.client.get(reverse('vote_list'))
+        self.assertQuerysetEqual(
+            response.context['vote_list'],
+            [vote],
+        )
+
+class VoteDetailViewTests(TestCase):
+    def test_vote_detail(self):
+        """
+        The detail view of a vote
+        """
+        book = create_book(title='Test book 1', genre='Popular')
+        user = User.objects.create_user('test_username', 'test_email@crazymail.com', 'mypassword')
+        vote = create_vote(book=book, user=user, comment='Test comment 2')
+        url = reverse('vote_detail', args=(vote.id,))
+        response = self.client.get(url)
+        self.assertContains(response, vote.comment)
+
+    def test_if_vote_doesnt_exist(self):
+        """
+        The detail view of the vote that doesn't exist
+        returns a 404 not found.
+        """
+        book = create_book(title='Test book 1', genre='Popular')
+        user = User.objects.create_user('test_username', 'test_email@crazymail.com', 'mypassword')
+        vote = create_vote(book=book, user=user, comment='Test comment 2')
+        url = reverse('vote_detail', args=(vote.id+1,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)

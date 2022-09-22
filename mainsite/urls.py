@@ -12,7 +12,7 @@ urlpatterns = [
     path('vote/<int:pk>/', views.VoteDetailView.as_view(), name='vote_detail'),
     path('vote', views.VoteListView.as_view(), name='vote_list'),
     path('book/<int:book_id>/', views.book_detail_view, name='book_detail'),
-    path('buyer/<int:user_id>/', views.buyer_detail_view, name='buyer_detail'),
+    path('buyer', views.buyer_detail_view, name='buyer_detail'),#/<int:user_id>/
 ]
 urlpatterns += [
     path('vote/create/$', views.VoteCreate.as_view(), name='vote_create'),
