@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', LOCAL_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', False))
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = ['igorshy.pythonanywhere.com',
                  '127.0.0.1']
@@ -140,18 +140,18 @@ DATABASES['default'].update(db_from_env)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 # The absolute path to the directory where collectstatic will collect static files for deployment.
-if SECRET_KEY != LOCAL_KEY:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-else:
-    STATIC_ROOT = BASE_DIR
+#if SECRET_KEY != LOCAL_KEY:
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#else:
+#    STATIC_ROOT = BASE_DIR
 
 # The URL to use when referring to static files (where they will be served from)
 STATIC_URL = '/static/'
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
-if SECRET_KEY != LOCAL_KEY:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#if SECRET_KEY != LOCAL_KEY:
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 #for debuging emails via terminal
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
