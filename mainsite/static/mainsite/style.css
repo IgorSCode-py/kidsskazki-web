@@ -37,6 +37,11 @@ li a {
 .active {
     background-color: #04AA6D;
 }
+main {
+margin: 20;
+border: 4px;
+padding:20;
+}
 h1 {
 margin:15
 }

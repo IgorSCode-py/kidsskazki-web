@@ -185,20 +185,22 @@ def create_buyer(book,user):
 class BuyerDetailViewTests(TestCase):
     def test_buyer_detail(self):
         """
-        The list of the books
-        bought (or available) by the user.
+        The list of the books bought (or available) by the user.
         """
 
         book = create_book(title='Test book 1', genre='Popular')
         user = User.objects.create_user('test_username', 'test_email@crazymail.com', 'mypassword')
         buyer = create_buyer(book=book,
                              user=user)
+        #надо добавить авторизацию
         url = reverse('buyer_detail')
 
         response = self.client.get(url)
+
+        print(response)
         #self.assertQuerysetEqual(
         #    qs=response.context['bought_list'],
-        #    values=[buyer]
+        #    values=[buyer],
         #)
 
         self.assertEqual(response.status_code, 302)

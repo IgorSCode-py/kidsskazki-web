@@ -92,9 +92,9 @@ def book_detail_view(request, book_id = 1):
 def buyer_detail_view(request):
     buyer = request.user
     bought_list = Buyer.objects.filter(buyer=buyer, bought=True)
-    context = {
-            'bought_list': bought_list
-            }
+    #context = super().get_context_data(**kwargs)
+    context = {'bought_list': bought_list}
+
     return render(request, 'mainsite/buyer_detail.html', context)
 
 
