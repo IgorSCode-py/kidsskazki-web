@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.translation import gettext as _
 
 from .models import Book, Vote, Buyer
 
@@ -30,7 +31,7 @@ class IndexView(generic.ListView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        context['context_title'] = 'Popular'
+        context['context_title'] = _('Popular')
         return context
 
 class SleepingView(generic.ListView):
